@@ -1,20 +1,29 @@
-// ===== FECHA DE INICIO =====
-const inicio = new Date("2025-02-10T00:00:00");
+// ===== FECHA DE INICIO EXACTA =====
+// Nota: Meses en JS empiezan en 0 → 0 = enero, 1 = febrero
+const inicio = new Date(2025, 1, 11, 13, 0, 0); // 11 Feb 2024, 13:00
 
 // ===== CONTADOR =====
 function actualizarContador() {
     const ahora = new Date();
+    
+    // diferencia en milisegundos
     const diferencia = ahora - inicio;
 
-    const segundos = Math.floor(diferencia / 1000) % 60;
-    const minutos = Math.floor(diferencia / (1000 * 60)) % 60;
-    const horas = Math.floor(diferencia / (1000 * 60 * 60)) % 24;
-    const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+    // cálculo total de segundos
+    const totalSegundos = Math.floor(diferencia / 1000);
 
+    // cálculo de días completos, horas, minutos y segundos
+    const dias = Math.floor(totalSegundos / (3600 * 24));
+    const horas = Math.floor((totalSegundos % (3600 * 24)) / 3600);
+    const minutos = Math.floor((totalSegundos % 3600) / 60);
+    const segundos = totalSegundos % 60;
+
+    // mostrar en el HTML
     document.getElementById("contador").innerHTML =
         `${dias} días, ${horas} horas, ${minutos} minutos, ${segundos} segundos`;
 }
 
+// actualizar cada segundo
 setInterval(actualizarContador, 1000);
 actualizarContador();
 
